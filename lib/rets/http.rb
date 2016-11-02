@@ -205,7 +205,14 @@ module RETS
       end
 
       http.start do
-        http.request_get(request_uri, headers) do |response|
+        method = args[:method] || 'GET'
+        if method.to_s == 'GET'
+           req = Net::HTTP::Get.new(request_uri, headers)
+        elsif method.to_s == 'POST'
+           req = Net::HTTP::Post.new(request_uri, headers)
+        end
+
+        http.request(req) do |response|
           # Pass along the cookies
           # Some servers will continually call Set-Cookie with the same value for every single request
           # to avoid authentication problems from cookies being stomped over (which is sad, nobody likes having their cookies crushed).
