@@ -21,5 +21,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
 
   spec.add_runtime_dependency 'nokogiri', '>= 1.5.0'
-  spec.add_runtime_dependency 'net-http-digest_auth'
 end
