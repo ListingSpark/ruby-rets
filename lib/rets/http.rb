@@ -169,6 +169,7 @@ module RETS
     # @raise [RETS::HTTPError]
     # @raise [RETS::Unauthorized]
     def request(args, &block)
+      method = args[:method] || 'GET'
       if args[:params]
         url_terminator = (args[:url].request_uri.include?("?")) ? "&" : "?"
         request_uri = "#{args[:url].request_uri}#{url_terminator}"
@@ -185,9 +186,9 @@ module RETS
       @request_count += 1
       if @auth_mode == :digest
         if headers
-          headers["Authorization"] = create_digest("GET", request_uri)
+          headers["Authorization"] = create_digest(method, request_uri)
         else
-          headers = {"Authorization" => create_digest("GET", request_uri)}
+          headers = {"Authorization" => create_digest(method, request_uri)}
         end
       end
 
